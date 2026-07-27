@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Tracker - Async & Fetch</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Axios via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+
+    <header>
+        <h1>Learning Tracker</h1>
+    </header>
+
+    <main>
+
+        <section id="courses-section">
+            <h2>My Courses</h2>
+            <p id="courses-loading">Fetching your courses...</p>
+            <div class="course-grid" id="course-grid"></div>
+            <p id="total-credits"></p>
+        </section>
+
+        <section id="notifications">
+            <h2>Announcements</h2>
+            <p id="notif-loading">Loading...</p>
+            <div id="notif-error"></div>
+            <div id="notif-list"></div>
+        </section>
+
+        <section id="axios-section">
+            <h2>Axios — User 2 Feed</h2>
+            <div id="axios-posts"></div>
+        </section>
+
+    </main>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>

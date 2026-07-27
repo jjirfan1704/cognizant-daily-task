@@ -1,0 +1,19 @@
+<header class="site-header">
+  <div class="brand">
+    <span class="brand-mark">SP</span>
+    <span class="brand-name">Student Portal</span>
+  </div>
+
+  <nav class="nav-links">
+    <a routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+      Courses
+    </a>
+    <a [routerLink]="['/profile']" routerLinkActive="active-link">
+      Profile
+    </a>
+  </nav>
+
+  <div class="signed-in-as">
+    Hi, {{ studentName }}
+  </div>
+</header>

@@ -1,0 +1,13 @@
+<article class="course-card">
+  <div class="card-top">
+    <h3>{{ name }}</h3>
+    <span class="course-code">{{ code }}</span>
+  </div>
+
+  <div class="card-body">
+    <span class="credits">{{ credits }} credits</span>
+    <span class="grade" [class.grade-good]="grade.startsWith('A')">
+      Grade: {{ grade }}
+    </span>
+  </div>
+</article>

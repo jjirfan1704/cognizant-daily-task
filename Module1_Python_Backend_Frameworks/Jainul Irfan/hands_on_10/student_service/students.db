@@ -1,0 +1,7 @@
+with app.app_context():
+    db.create_all()
+
+    if Student.query.count() == 0:
+        db.session.add(Student(name="Alice", email="alice@gmail.com"))
+        db.session.add(Student(name="Bob", email="bob@gmail.com"))
+        db.session.commit()

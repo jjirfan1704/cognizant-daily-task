@@ -1,0 +1,1 @@
+from .models import Department, Course, Student, Enrollment

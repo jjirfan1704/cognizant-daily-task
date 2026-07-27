@@ -1,0 +1,43 @@
+<section class="profile-section">
+  <h2>My Profile</h2>
+
+  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="profile-form">
+    <div class="form-field">
+      <label for="name">Full name</label>
+      <input id="name" type="text" formControlName="name" />
+      <small class="error-text" *ngIf="name.touched && name.invalid">
+        Name is required
+      </small>
+    </div>
+
+    <div class="form-field">
+      <label for="email">Email</label>
+      <input id="email" type="email" formControlName="email" />
+      <small class="error-text" *ngIf="email.touched && email.errors?.['required']">
+        Email is required
+      </small>
+      <small class="error-text" *ngIf="email.touched && email.errors?.['email']">
+        Enter a valid email
+      </small>
+    </div>
+
+    <div class="form-field">
+      <label for="semester">Semester (1-8)</label>
+      <input id="semester" type="number" formControlName="semester" />
+      <small class="error-text" *ngIf="semester.touched && semester.errors?.['required']">
+        Semester is required
+      </small>
+      <small class="error-text" *ngIf="semester.touched && (semester.errors?.['min'] || semester.errors?.['max'])">
+        Semester must be between 1 and 8
+      </small>
+    </div>
+
+    <button type="submit" [disabled]="profileForm.invalid">
+      Save Profile
+    </button>
+
+    <p class="success-text" *ngIf="submittedSuccessfully">
+      Profile saved. Check the console for the submitted value.
+    </p>
+  </form>
+</section>

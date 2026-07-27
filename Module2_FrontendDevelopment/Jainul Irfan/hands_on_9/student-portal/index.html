@@ -1,0 +1,168 @@
+<!--
+  ACCESSIBILITY AUDIT LOG — Student Portal (HTML/CSS/JS)
+  =========================================================
+  Tool: Chrome DevTools > Lighthouse > Accessibility, plus axe DevTools extension.
+
+  BASELINE (before fixes) — recorded from the original Hands-On 1-3 markup:
+    Lighthouse Accessibility score: [[ RUN LIGHTHOUSE ON YOUR MACHINE AND FILL IN, e.g. 61/100 ]]
+    Issues flagged:
+      - Images missing alt attributes (course thumbnails, logo)
+      - Form inputs missing associated <label> elements (search box, profile form)
+      - Heading hierarchy skipped a level (h1 -> h3 with no h2)
+      - Interactive controls implemented as <div>/<span> with onclick, not reachable by keyboard
+      - Nav landmark missing an accessible name
+      - Body text colour on light background below 4.5:1 contrast ratio
+
+  AFTER FIXES (this file):
+    Lighthouse Accessibility score: [[ RE-RUN LIGHTHOUSE AFTER THE FIXES BELOW AND FILL IN ]]
+    Fixes applied, matching the issues above:
+      1. Every <img> now has descriptive alt text; purely decorative icons use alt="".
+      2. Every <input> has a <label for="..."> pairing (search box + all profile fields).
+      3. Heading order corrected: h1 (page title) -> h2 (section titles) -> h3 (sub-groups),
+         no levels skipped.
+      4. All clickable controls are real <button> or <a> elements (see course-card actions
+         and the mobile nav toggle) so they're keyboard-focusable and get default
+         Enter/Space activation for free; the one exception (the course card itself, which
+         needs to be focusable as a whole) uses tabindex="0" plus an explicit keydown
+         handler in script.js so Enter on the card behaves like a click.
+      5. <nav aria-label="Main navigation"> gives the nav landmark an accessible name, and
+         the active link gets aria-current="page".
+
+  NOTE: Lighthouse/axe scores are specific to the browser + machine that runs them. Open
+  this file in Chrome, run DevTools > Lighthouse > Accessibility yourself, and replace the
+  two [[ ... ]] placeholders above with your real recorded scores before submitting, so the
+  log reflects your own audit run rather than a guessed number.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Portal | Accessible Edition</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="brand">
+      <img src="assets/logo.svg" alt="Student Portal logo" class="brand-logo" />
+      <span class="brand-name">Student Portal</span>
+    </div>
+
+    <button
+      id="nav-toggle"
+      class="nav-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="primary-nav"
+    >
+      <span class="sr-only">Toggle navigation menu</span>
+      <span aria-hidden="true">&#9776;</span>
+    </button>
+
+    <nav id="primary-nav" class="primary-nav" aria-label="Main navigation">
+      <a href="#courses" aria-current="page">Courses</a>
+      <a href="#profile">Profile</a>
+    </nav>
+  </header>
+
+  <main class="page-wrap">
+    <div class="page-title-row">
+      <h1>My Student Portal</h1>
+      <!-- Purely decorative flourish: adds nothing a screen reader user needs,
+           so it uses alt="" and is skipped by assistive tech. -->
+      <img src="assets/flourish.svg" alt="" class="title-flourish" />
+    </div>
+
+    <section id="courses" aria-labelledby="courses-heading">
+      <h2 id="courses-heading">My Courses</h2>
+
+      <div class="search-row">
+        <label for="course-search">Search courses by name or code</label>
+        <input
+          type="text"
+          id="course-search"
+          name="course-search"
+          placeholder="e.g. Data Structures or CS301"
+          autocomplete="off"
+        />
+      </div>
+
+      <p id="results-count" role="status" aria-live="polite" class="results-count">
+        5 courses found
+      </p>
+
+      <ul id="course-grid" class="course-grid" aria-label="Course list">
+        <!-- course-card <li> elements are injected by script.js from the courses array -->
+      </ul>
+    </section>
+
+    <section id="profile" aria-labelledby="profile-heading">
+      <h2 id="profile-heading">My Profile</h2>
+
+      <form id="profile-form" novalidate>
+        <h3>Basic details</h3>
+
+        <div class="form-field">
+          <label for="full-name">Full name</label>
+          <input type="text" id="full-name" name="full-name" required />
+          <p class="error-text" id="full-name-error" hidden>Name is required.</p>
+        </div>
+
+        <div class="form-field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required />
+          <p class="error-text" id="email-error" hidden>Enter a valid email address.</p>
+        </div>
+
+        <div class="form-field">
+          <label for="semester">Semester (1-8)</label>
+          <input type="number" id="semester" name="semester" min="1" max="8" required />
+          <p class="error-text" id="semester-error" hidden>Semester must be between 1 and 8.</p>
+        </div>
+
+        <h3>Contact preference</h3>
+
+        <fieldset class="form-field">
+          <legend>How should we reach you?</legend>
+          <div class="radio-row">
+            <input type="radio" id="contact-email" name="contact-pref" value="email" checked />
+            <label for="contact-email">Email</label>
+          </div>
+          <div class="radio-row">
+            <input type="radio" id="contact-sms" name="contact-pref" value="sms" />
+            <label for="contact-sms">SMS</label>
+          </div>
+        </fieldset>
+
+        <button type="submit" class="submit-btn">Save profile</button>
+        <p id="save-confirmation" role="status" aria-live="polite" class="save-confirmation" hidden>
+          Profile saved.
+        </p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 Student Portal. Built for accessible, cross-browser use.</p>
+  </footer>
+
+  <!--
+    Polyfill: css-vars-ponyfill provides CSS custom-property support for browsers that
+    don't implement them natively (e.g. IE11). Loaded from a CDN and initialised at the
+    bottom of the page so it can process the stylesheet once the DOM is parsed.
+    Docs: https://jhildenbiddle.github.io/css-vars-ponyfill/
+  -->
+  <script src="https://cdn.jsdelivr.net/npm/css-vars-ponyfill@2/dist/css-vars-ponyfill.min.js"></script>
+  <script>
+    if (window.cssVars) {
+      window.cssVars({
+        include: 'style',
+        onlyLegacy: true // only runs the ponyfill on browsers that actually need it
+      });
+    }
+  </script>
+
+  <script src="script.js"></script>
+</body>
+</html>

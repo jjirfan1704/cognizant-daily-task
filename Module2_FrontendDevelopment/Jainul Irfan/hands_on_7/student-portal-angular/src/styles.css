@@ -1,0 +1,32 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --brand-primary: #2f6f4f;
+  --brand-primary-dark: #234f39;
+  --brand-accent: #e07a3f;
+  --surface: #f6f8f6;
+  --surface-card: #ffffff;
+  --text-main: #1e2a24;
+  --text-muted: #5c6b63;
+  --border-soft: #dfe6e1;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--surface);
+  color: var(--text-main);
+}
+
+h1, h2, h3 {
+  margin: 0 0 0.5rem 0;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}

@@ -1,0 +1,7 @@
+with app.app_context():
+    db.create_all()
+
+    if Course.query.count() == 0:
+        db.session.add(Course(name="Python", code="CS101"))
+        db.session.add(Course(name="Database", code="CS102"))
+        db.session.commit()

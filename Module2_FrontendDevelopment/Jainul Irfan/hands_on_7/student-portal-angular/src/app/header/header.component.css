@@ -1,0 +1,52 @@
+.site-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.9rem 1.5rem;
+  background-color: var(--brand-primary);
+  color: #ffffff;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+}
+
+.brand-mark {
+  background-color: var(--brand-accent);
+  color: #fff;
+  border-radius: 6px;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.25rem;
+  margin-right: auto;
+}
+
+.nav-links a {
+  color: #eaf3ee;
+  text-decoration: none;
+  font-size: 0.95rem;
+  padding-bottom: 2px;
+  border-bottom: 2px solid transparent;
+}
+
+.nav-links a:hover {
+  color: #ffffff;
+}
+
+.nav-links a.active-link {
+  border-bottom-color: var(--brand-accent);
+  color: #ffffff;
+}
+
+.signed-in-as {
+  font-size: 0.85rem;
+  color: #dcece3;
+}
